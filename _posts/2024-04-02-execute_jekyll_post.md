@@ -104,8 +104,23 @@ jekyll.yml을 커밋한다.
 이전의 gitblog내용이 대신 나오는 경우가 있다. 웹캐시가 남아있기 때문인데, [웹캐시제거](https://sukyungdev.github.io/posts/Post-03/)방법을 따라\
 ctrl+shift+R로 강한 새로고침을 해주면 캐시적용없는 새로고침이 가능해서 도메인이 가리키는 진짜 gitblog내용을 볼 수 있다.
 
+### 2.1. jekyll-compose 설치
 
-### 2.1. post 기본 설정
+이거 안하면 jekyll post실행 안된다.
+
+루트디렉토리에 있는 Gemfile에 맨 아래 아래내용을 추가한다.
+
+```
+gem 'jekyll-compose', group: [:jekyll_plugins]
+```
+
+jemfile에 등록된 종속성인 jekyll-compose 플러그인을 다음의 명령으로 설치한다.
+
+```
+bundle
+```
+
+### 2.2. post 기본 설정
 
 이제 jekyll-compose 플러그인을 통해 게시글을 생성할 수 있는데, 그 전에 게시글에 기본 정보를 설정하자.\
 **config.yml** 파일을 열어 아래내용을 아무데나 추가한다.
@@ -143,7 +158,7 @@ export JEKYLL_EDITOR=code
 source ~/.zshrc
 ```
 
-### 2.2. 명령어를 통해 post파일 생성
+### 2.3. 명령어를 통해 post파일 생성
 
 이제 명령어를 통해서 게시글이나 초안 등을 생성할 수 있다.
 
@@ -163,7 +178,7 @@ bundle exec jekyll post [글 제목]
 **rename** -> 입력받은 초안의 이름 변경  
 **compose** -> 입력받은 이름으로 파일 생성
 
-### 2.3. post 약어 설정
+### 2.4. post 약어 설정
 
 기존의 post생성 명령어는 너무 길다. **alias를 설정**해 간편하게 이용해보자.
 
