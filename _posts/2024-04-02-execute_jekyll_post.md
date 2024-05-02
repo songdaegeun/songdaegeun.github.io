@@ -44,10 +44,10 @@ $ echo 'eval "$(~/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc
 ```
 ## 설치가능한 ruby 버전 확인
 $ rbenv install -l
-## ex. rbenv install 3.1.3
+## ex. rbenv install 3.3.1
 $ rbenv install [Version]
 ## 설치받은 ruby의 버전을 global로 사용할 것인지 local에서만 사용할 것인지 설정
-$ rbenv global 3.1.3
+$ rbenv global 3.3.1
 # gem은 ruby의 패키지관리도구이다.
 # ruby 패키지의 종속성 관리 도구인 Bundler를 설치한다. 
 # Bundler는 Gemfile에 명시된 종속성들을 자동으로 설치해준다.
