@@ -195,7 +195,7 @@ post [글 제목]
 ### 참고문서
 
 - [theme 설치](https://iiibreakeriii.github.io/Post2(ChirpyBlog))
-- [chirpy docs][https://chirpy.cotes.page/]
+- [chirpy docs](https://chirpy.cotes.page/)
 - [Jekyll-Compose](https://github.com/jekyll/jekyll-compose)
 - [post default setting관련 config.yml](https://10kseok.github.io/posts/easy-to-make-default-mdfile-to-use-jekyll-compose/)
 - [build and deployment error](https://friendlyvillain.github.io/posts/chirpy-setup/)

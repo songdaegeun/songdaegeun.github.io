@@ -128,14 +128,27 @@ paginate: 20
 # The base URL of your site
 baseurl: ""
 
+# jekyll_compose:
+#   auto_open: true # 게시글 생성시 자동열림
+#   default_front_matter:
+#     posts:
+#       description: 
+#       author: rosi
+#       categories: []
+#       tags:
+
+
 jekyll_compose:
   auto_open: true # 게시글 생성시 자동열림
-  default_front_matter:
-    posts:
-      description: 
-      author: rosi
-      categories: []
-      tags:
+  posts:
+    title: TITLE
+    date: YYYY-MM-DD HH:MM:SS +/-TTTT
+    author: songdaegeun
+    categories: [TOP_CATEGORIE, SUB_CATEGORIE]
+    tags: [TAG]     # TAG names should always be lowercase
+    pin: false # true or flase (defalut: false)
+    math: true
+
 
 # ------------ The following options are not recommended to be modified ------------------
 
