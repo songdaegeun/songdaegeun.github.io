@@ -799,10 +799,13 @@ $btn-mb: 0.5rem;
         align-items: center;
         border-radius: 0.75rem;
         font-weight: 600;
+		// color: #000000;
+		color: #5f3c00;
 
         &:hover {
-			background-color: #ffffff77;
-        //   background-color: var(--sidebar-hover-bg);
+			color: #f92fd0;
+		// background-color: #ffffff77;
+        // background-color: var(--sidebar-hover-bg);
         }
 
         i {
@@ -813,7 +816,6 @@ $btn-mb: 0.5rem;
         }
 
         span {
-			color: #000000;
 			font-size: 90%;
 			letter-spacing: 0.2px;
         }
@@ -821,7 +823,7 @@ $btn-mb: 0.5rem;
 
       &.active {
         .nav-link {
-			background-color: #ffffff77;
+			// background-color: #ffffff77;
 			// color: var(--sidebar-active-color);
 		  	// background-color: var(--sidebar-hover-bg);
 			span {
