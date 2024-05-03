@@ -1,0 +1,33 @@
+<mujoco>
+  <compiler angle="radian"/>
+  <visual>
+    <headlight ambient=".3 .3 .3" />
+  </visual>
+  <asset>
+	<material name="white" rgba="1 1 1 1"/>
+  </asset>
+  <option gravity="0 0 -9.8">
+    <!-- <flag gravity="enable"/> -->
+  </option>
+
+  <worldbody>
+    <light diffuse=".3 .3 .3" pos="0 0 3" dir="0 0 -1"/>
+    <geom type="plane" size="1 1 .1" rgba="0 .9 0 1"/>
+	<body pos=".2 0 2.3">
+      <joint type="free"/>
+	  <inertial pos="0 0 0" mass="1" diaginertia=".01 .01 .01"/>
+      <geom type="sphere" size=".1" rgba="0 0 1 1"/>
+    </body>
+	<body pos="0 0 2" euler="0 -1.57 0">
+      <joint type="free"/>
+	  <inertial pos="0 0 0" mass="1" diaginertia=".01 .01 .01"/>
+      <geom type="box" size=".1 .2 .3" rgba=".9 0 0 1"/>
+    </body>
+    <body pos="0 0 1" euler="0 0 0">
+      <joint type="free"/>
+	  <inertial pos="0 0 0" mass="1" diaginertia=".01 .01 .01"/>
+	  <geom type="box" size=".1 .2 .3" material="white"/>
+    </body>
+
+  </worldbody>
+</mujoco>

@@ -1,0 +1,24 @@
+<mujoco>
+  <option timestep="0.00005" integrator="RK4" gravity="0 0 -9.81">
+	<flag energy="enable" contact="enable"/>
+  </option>
+  <visual>
+		<headlight ambient=".5 .5 .5"/>
+  </visual>
+  <worldbody>	
+    <geom type="plane" size="100 3 0.1" rgba=".9 0 0 1"/>
+	<geom type="cylinder" pos="5 0 1" size=".2 1" rgba=".9 .9 0 1"/>
+
+	<body pos="0 0 .1">
+		<joint type="free"/>
+		<geom type="sphere" size=".1" rgba="0 .9 0 1" mass="1"/>
+	</body>
+
+	<body pos="5 0 2.1">
+		<joint type="free"/>
+		<geom type="box" size=".1 .1 .1" rgba="0 .9 0 1" mass="0.1"/>
+	</body>
+
+  </worldbody>
+ 
+</mujoco>
