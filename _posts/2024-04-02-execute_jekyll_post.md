@@ -111,12 +111,13 @@ ctrl+shift+R로 강한 새로고침을 해주면 캐시적용없는 새로고침
 [2024-05-03 20:21:16] ERROR `/assets/js/dist/post.min.js' not found.
 ```
 
-알고보니 이거때문에 toc랑 mode-watcher가 안되고 있었다. 이에 대한 issue는 다음과 같다.\
-[issue](https://github.com/cotes2020/jekyll-theme-chirpy/issues/1090)
+알고보니 이거때문에 toc랑 mode-watcher가 안되고 있었다.([issue](https://github.com/cotes2020/jekyll-theme-chirpy/issues/1090))  
+JS 프로젝트의 번들링과 관련된 환경변수인 NODE_ENV를 production으로 바꿔야하는 것같다.
 
-일단 .gitignore에 assets/js/dist을 추가한다.
-그리고 다음과 같은 명령을 수행한다.
+다음과 같이 해결한다.
+
 ```
+# 일단 .gitignore에 assets/js/dist을 추가한다.
 $ npm install
 $ NODE_ENV=production npx rollup -c --bundleConfigAsCjs
 ```
