@@ -3,7 +3,7 @@ layout: post
 title: markdown_script
 date: 2024-05-03 00:39 +0900
 author: songdaegeun
-categories:
+categories: ["miscellaneous"]
 tags:
 pin: false
 math: true
@@ -28,9 +28,9 @@ math: true
 ### ToDo list
 
 - [ ] Job
-  + [x] Step 1
-  + [x] Step 2
-  + [ ] Step 3
+  - [x] Step 1
+  - [x] Step 2
+  - [ ] Step 3
 
 ### Description list
 
@@ -72,4 +72,4 @@ Grammar is similar with LaTex.
 
 ## References
 
-[Chripy Demo Page](https://chirpy.cotes.page/)
+[Chripy docs](https://chirpy.cotes.page/)

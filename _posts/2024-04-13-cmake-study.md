@@ -4,7 +4,7 @@ title: cmake_study
 date: 2024-04-13 20:36 +0900
 description:
 author: rosi
-categories: [miscellaneous tools]
+categories: [miscellaneous]
 tags:
 ---
 
