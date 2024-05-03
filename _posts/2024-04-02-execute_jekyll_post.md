@@ -104,6 +104,24 @@ jekyll.yml을 커밋한다.
 이전의 gitblog내용이 대신 나오는 경우가 있다. 웹캐시가 남아있기 때문인데, [웹캐시제거](https://sukyungdev.github.io/posts/Post-03/)방법을 따라\
 ctrl+shift+R로 강한 새로고침을 해주면 캐시적용없는 새로고침이 가능해서 도메인이 가리키는 진짜 gitblog내용을 볼 수 있다.
 
+- Toc, darkmode 문제
+
+멀쩡히 작동하는 것같은데 local gitblog에서 새로고침을 할 때마다 jekyll serve를 돌리는 terminal에 아래와 같은 문구가 떳다.
+```
+[2024-05-03 20:21:16] ERROR `/assets/js/dist/post.min.js' not found.
+```
+
+알고보니 이거때문에 toc랑 mode-watcher가 안되고 있었다. 이에 대한 issue는 다음과 같다.\
+[issue](https://github.com/cotes2020/jekyll-theme-chirpy/issues/1090)
+
+일단 .gitignore에 assets/js/dist을 추가한다.
+그리고 다음과 같은 명령을 수행한다.
+```
+$ npm install
+$ NODE_ENV=production npx rollup -c --bundleConfigAsCjs
+```
+이제 toc랑 mode-watcher(dork/white mode toggle)가 정상작동한다.
+
 ### 2.1. jekyll-compose 설치
 
 이거 안하면 jekyll post실행 안된다.
