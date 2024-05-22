@@ -73,8 +73,16 @@ $$C \exp \left( \langle \mathbf{x}, \mathbf{x}_0 \rangle \right) = C \sum_{n=0}^
 
 We see that the RBF kernel is formed by taking an infinite sum over [polynomial kernels]((https://en.wikipedia.org/wiki/Polynomial_kernel)).  
 
-RBF kernel이 polynomial kernels의 무한 합인데, 두 kernel의 합은 각 kernel들로 구성된 tuple이라고 할 수 있고, 
-무한 합은 kernel의 차원이 무한임을 의미한다. (해당내용은 [RBF kernel lecture note](https://pages.cs.wisc.edu/~matthewb/pages/notes/pdf/svms/RBFKernel.pdf) 참고)  
+RBF kernel이 polynomial kernels의 무한 합이다.
+kernel은 nonlinear feature vector의 inner product이고, 두 kernel의 합은 각 inner product의 합을 의미한다.  
+그 결과를 다시 kernel로 표현하려면, 두 nonlinear feature vector의 inner product로 표현해야한다.
+이 경우 더해지기 전 두 kernel의 nonlinear feature vector를 fa, fb라고 하고  
+더해진 후의 nonlinear feature vector fc라고 할 때,  
+$$fc = [fa fb]^T$$ 로 생각할 수 있다. 
+즉 두 kernel의 합이 되는 kernel의 nonlinear feature vector fc의 차원은 다음과 같다.  
+dim(fc) = dim(fa)+dim(fb)  
+따라서 kernel의 무한 합이 되는 kernel의 nonlinear feature vector는 infinite dimentional vector가 된다.  
+(해당내용은 [RBF kernel lecture note](https://pages.cs.wisc.edu/~matthewb/pages/notes/pdf/svms/RBFKernel.pdf) 참고)  
 
 #### mth entry (or feature) of infinite dimentional nonlinear feature fransform vector
 
