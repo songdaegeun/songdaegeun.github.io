@@ -95,7 +95,8 @@ $$
 L = \frac{1}{4P}\left\Vert \sum_{p=1}^{P}\mathring{\mathbf{x}}_p^{\,}\mathring{\mathbf{x}}_p^T \right\Vert_2^2
 $$
 
-- 행렬 A의 p-norm과 2-norm의 제곱
+- 행렬 A의 p-norm과 2-norm의 제곱  
+[행렬의 norm](https://ghebook.blogspot.com/2021/03/matrix-norm-and-condition-number.html)
 
 행렬 A의 p-norm은 다음과 같이 정의된다.
 $$
@@ -184,12 +185,14 @@ $$
 
 $$
 g(\mathbf{w}) = g(\mathbf{w_{k-1}}) + \nabla g(\mathbf{w_{k-1}})^T (\mathbf{w} - \mathbf{w_{k-1}}) + \frac{1}{2} (\mathbf{w} - \mathbf{w_{k-1}})^T \nabla^2 g(\mathbf{c}) (\mathbf{w} - \mathbf{w_{k-1}})
-$$
+$$  
 where $c$ is a point on the line segment connecting $w$ and $w_{k-1}$.
 
-since $\nabla^2 g \in L \mathbb{I}_{N \times N}$(L is Lipschitz parameter), we have
+since $$ \nabla^2 g \in L \mathbb{I}_{N \times N}$$  
+such that L is Lipschitz parameter,  
+we have  
 $$
 \mathbf{a}^T \nabla^2 g(\mathbf{c}) \mathbf{a} \leq L \|\mathbf{a}\|_2^2
-$$
+$$  
 for $a = w - w_{k-1}$, which implies $g(w) ≤ h_{1/L}(w)$.
 
