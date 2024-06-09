@@ -3,7 +3,7 @@ layout: post
 title: 1_ros1_in_m1_mac
 date: 2024-06-09 15:29 +0900
 author: songdaegeun
-categories:
+categories: ["ros1", "noetic"]
 tags: ["ros1", "noetic"]
 pin: false
 math: true
