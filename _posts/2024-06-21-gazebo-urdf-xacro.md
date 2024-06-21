@@ -12,8 +12,7 @@ math: true
 본 post는 aidin_arm package를 이용할 때, gazebo simulator상에 load되는 model의 구조를 이해하기 위해 작성되었다.
 
 #### gazebo 
-[gazebo_tutorial](https://classic.gazebosim.org/tutorials)  
-
+[gazebo_tutorial](https://classic.gazebosim.org/tutorials), [gazebo source](https://github.com/gazebosim/gazebo-classic)  
 gazebo는 3D dynamic simulator이다.  
 주로 ROS와 함께 사용된다.  
 

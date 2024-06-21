@@ -2,7 +2,7 @@
 
 ## Overview
 
-songdaegeun's blog - I am a student working on RL-based mpc for visual servoing.
+songdaegeun's blog - I am a student working on ~
 
 [**songdaegeun.github.io**](https://songdaegeun.github.io) 
 
