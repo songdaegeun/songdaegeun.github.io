@@ -22,7 +22,7 @@ turtlesim을 실행할 때 segmentation fault가 떳고, docker-for-mac이 m1 �
 
 #### 설치과정(mac기준)
 
-```
+```	
 # XQuartz실행
 open -a XQuartz
 # localhost를 x11 server(xquartz)에 접근가능한 host목록(xhost)에 추가한다.

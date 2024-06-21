@@ -39,13 +39,13 @@ rospack depends1 rospy
 rospack depends beginner_tutorials
 
 ```
-package를 생성하는 방법
+package를 생성하는 방법(src내에서 한다)
 ```
 catkin_create_pkg <package_name> [depend1] [depend2] [depend3]
 ```
 이후 dependency관련은 package.xml에서, build관련은 CMakeLists.txt에서 조정한다.  
 
-package를 빌드하는 방법
+package를 빌드하는 방법(src위에서 한다. build, devel과 같은 level)
 ```
 # package가 정의(CMakeLists.txt, [package name])된 directory가 'src'(default)인 경우
 catkin_make
