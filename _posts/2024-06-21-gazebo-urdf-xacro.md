@@ -56,6 +56,7 @@ Xacro는 XML을 확장한 매크로 언어로, 복잡한 URDF 파일을 더 효�
 [roslaunch](https://wiki.ros.org/roslaunch)  
 [roslaunch/XML](https://wiki.ros.org/roslaunch/XML)  
 여러 노드(프로세스)를 한번에 제어할 때 사용한다. XML 기반의 파일형식이다.  
+roslaunch/XML문서에서 각 태그의 attribute와 element를 확인할 수 있다.   
 
 1. 로컬프로세스
 launch파일에 별다른 설정이 없으면 node는 디폴트로 로컬프로세스로 취급된다.  
@@ -67,7 +68,6 @@ roslaunch는 노드 시작에 대한 특정 순서를 보장하지 않는다.
 node를 원격프로세스로 제어할 수도 있다.  
 다른 컴퓨터의 노드를 제어하려면 네트워크 설정(ssh, TCP/IP 등)이 필요하다.  
 (ex. ROS_MASTER_URI와 remote host인 ROS_IP의 ip주소를 설정해야한다.)  
-
 
 기본구조는 다음과 같다.  
 
@@ -113,26 +113,40 @@ parameter를 param. server에서 삭제할 수도 있다.
 - substitution args
 launch를 시작하기 전에 parsing하여 실행된다.   
 다음과 같은 substitution args들이 있다.  
-$(dirname) // 디렉토리 절대경로로 대체
-$(optenv ENVIRONMENT_VARIABLE) // 환경 변수가 설정된 경우 해당 값을 대체
-$(arg foo) // argument의 값을 꺼내서 대체
-$(eval <expression>)  // 계산 후 대체
-$(anon name) // name은 고유 식별자이며 이를 기반으로 익명의 id를 생성한다.
-$(find pkg)  // particular machine의 위치를 명시하는 대신, ROS package의 상대경로를 찾아주는 syntax이다.  
-$(env ENVIRONMENT_VARIABLE) // 해당 syntax를 사용하여 include 태그와 함께 environment variables 기반으로 launch file을 load할 수 있다.  
+$(dirname)
+// 디렉토리 절대경로로 대체  
+$(optenv ENVIRONMENT_VARIABLE)
+// 환경 변수가 설정된 경우 해당 값을 대체
+$(arg foo)
+// argument의 값을 꺼내서 대체
+$(eval <expression>) 
+// 계산 후 대체
+$(anon name)
+// name은 고유 식별자이며 이를 기반으로 익명의 id를 생성한다.
+$(find pkg) 
+// particular machine의 위치를 명시하는 대신, ROS package의 상대경로를 찾아주는 syntax이다.  
+$(env ENVIRONMENT_VARIABLE)
+// 해당 syntax를 사용하여 include 태그와 함께 (shell에 이미 set된)environment variables 기반으로 launch file을 load할 수 있다.  
+
+- include  
+현재 launch파일에 다른 .launch 파일을 포함시킨다. 
+include되는 file은 master 태그(deprecated)를 제외한 모든 내용이 포함된다.  
+ 이름이 사용자 파일과 충돌하지 않도록 네임스페이스를 할당할 수 있다.  
 
 - env  
 machine이나 node를 위해 set되어야하는 environment variables를 정의한다.  
+// NOTE: Values set using the <env> tag will not be seen by $(env ...), so the <env> tag cannot be used to parametrize launch files.
 
 - machine  
-machine 정의와 노드 정의를 별도의 .launch 파일로 분리하고, alias를 사용하여 runtime에 어떤 machine이 사용될 지 정의할 수 있다.  
-이를 통해 여러 robot에 대해 동일한 node 정의를 재사용할 수 있다.  
-
-- include  
-다른 .launch 파일을 쉽게 포함하고 이름이 사용자 파일과 충돌하지 않도록 네임스페이스를 할당할 수 있다.  
+ROS nodes를 실행할 수 있는 machine을 선언하는 태그이다. 모든 node를 local로 실행한다면 이 태그를 사용할 필요없다. 이 태그는 주로 remote machines에 대한 SSH와 환경변수 setting을 선언하기위해 사용된다. alias를 사용하여 runtime에 어떤 machine이 사용될 지 정의할 수 있다.  
+이를 통해 여러 machine에 대해 동일한 node 정의를 재사용할 수 있다.  
 
 - test
 Launch a test node (see rostest).
+아래와 같은 형식으로 test script를 실행할 수 있다.
+```
+<test test-name="test_my_node" pkg="my_package" type="test_my_node.py" />
+```
 
 #### .world
 모델을 추가하고, 센서, 조명, 지형 등의 환경을 정의하는데 사용된다.  
