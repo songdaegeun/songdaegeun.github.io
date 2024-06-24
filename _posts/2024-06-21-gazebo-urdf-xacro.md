@@ -131,7 +131,7 @@ $(env ENVIRONMENT_VARIABLE)
 - include  
 현재 launch파일에 다른 .launch 파일을 포함시킨다. 
 include되는 file은 master 태그(deprecated)를 제외한 모든 내용이 포함된다.  
- 이름이 사용자 파일과 충돌하지 않도록 네임스페이스를 할당할 수 있다.  
+이름이 사용자 파일과 충돌하지 않도록 네임스페이스를 할당할 수 있다.  
 
 - env  
 machine이나 node를 위해 set되어야하는 environment variables를 정의한다.  
@@ -151,3 +151,5 @@ Launch a test node (see rostest).
 #### .world
 모델을 추가하고, 센서, 조명, 지형 등의 환경을 정의하는데 사용된다.  
 XML 기반의 파일형식이다.  
+
+#### .gazebo 
