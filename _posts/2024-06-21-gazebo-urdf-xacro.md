@@ -148,6 +148,8 @@ Launch a test node (see rostest).
 <test test-name="test_my_node" pkg="my_package" type="test_my_node.py" />
 ```
 
+
+
 #### .world
 모델을 추가하고, 센서, 조명, 지형 등의 환경을 정의하는데 사용된다.  
 XML 기반의 파일형식이다.  
