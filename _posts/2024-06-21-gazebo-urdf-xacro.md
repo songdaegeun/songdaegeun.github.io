@@ -90,7 +90,11 @@ node를 원격프로세스로 제어할 수도 있다.
 - group  
 launch 태그와 기능이 동일하며, launch 파일 내부에서 실행되었기 때문에 단순히 태그 내부에 대한 컨테이너 역할을 한다.  
 node들을 grouping하여 setting(launch파일 내에서 일반적으로 사용되는 모든 태그)을 한번에 적용할 수 있다.  
-group에 ns를 부여할 수 있다.  
+ex.
+```
+<group ns="$(arg robot_namespace)">
+</group>
+```
 
 - remap
 node 태그 시작 전에 remap을 통해 topic을 redirection할 수 있다.  
@@ -101,17 +105,54 @@ node 태그 시작 전에 remap을 통해 topic을 redirection할 수 있다.
 ```
 
 - node 
-Launch a node.
+Launch a node.  
+roslaunch는 노드가 어떤 순서로 시작하는지에 대한 보장을 제공하지 않는다.  
+ex.
+```
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+  <param name="publish_frequency" value="1000.0"/>
+</node>
+```
 
 - param
-Set a parameter on the Parameter Server.
+Set a parameter on the Parameter Server.  
+Instead of value, you can specify a textfile, binfile or command attribute to set the value of a parameter.  
+<param> 태그는 <node> 태그 안에 넣을 수 있으며, 이 경우 private parameter로 처리된다.
+```
+<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find aidin8_sim)/urdf/aidin8_arm_cover_masszero.xacro'" />
+<param name="tf_prefix" value="$(arg robot_namespace)" /> 
+```
+
+private parameter
+: private name을 가진 parameter
+
+Graph Resource Names convention
+: There are four types of Graph Resource Names in ROS: base, relative, global, and private.
+: 1. 기본적으로, 이름은 namespace에 relative하다.  
+: 2. namespace가 없으면 base name이다.  
+: 3. "/"로 시작하는 name은 global name이다. 전역이름은 code portability를 제한시키기때문에 가급적 피한다.  
+: 4. "~"로 시작하는 name은 private name이다. namespace를 포함하여 node의 이름 뒤에 ~이하가 추가된 형식으로 변환된다.  
+Node types은 노드의 실행파일명이다.  
+messege type/service type은 각 messege, service형식을 명시한 파일이름이다.  
+
+Graph Resource
+: ROS1에서, 노드(Node) 간의 통신 및 데이터 흐름을 ROS Computation Graph라고하며 여기에 사용되는 node, parameter, messege등의 자원을 Graph Resource라고 한다.
+ex.  
+```
+<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find aidin8_sim)/urdf/aidin8_arm_cover_masszero.xacro'" />
+<param name="tf_prefix" value="$(arg robot_namespace)" /> 
+```
 
 - rosparam
 YAML 파일 형식의 여러 parameter가 정의된 rosparam 파일을 dump, load(parameter server로)할 수 있다.  
 parameter를 param. server에서 삭제할 수도 있다. 
+ex.
+```
+<rosparam file="$(find aidin8_sim)/config/aidinarm_control.yaml" command="load"/>
+```
 
 - substitution args
-launch를 시작하기 전에 parsing하여 실행된다.   
+launch를 시작하기 전에 parsing하여 실행된다.  
 다음과 같은 substitution args들이 있다.  
 $(dirname)
 // 디렉토리 절대경로로 대체  
@@ -128,10 +169,21 @@ $(find pkg)
 $(env ENVIRONMENT_VARIABLE)
 // 해당 syntax를 사용하여 include 태그와 함께 (shell에 이미 set된)environment variables 기반으로 launch file을 load할 수 있다.  
 
-- include  
+- include
 현재 launch파일에 다른 .launch 파일을 포함시킨다. 
-include되는 file은 master 태그(deprecated)를 제외한 모든 내용이 포함된다.  
-이름이 사용자 파일과 충돌하지 않도록 네임스페이스를 할당할 수 있다.  
+include되는 file은 master 태그(deprecated)를 제외한 모든 내용이 포함된다.
+ex.  
+```
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>
+</include>
+```
+
+- arg
+The <arg> tag allows you to create more re-usable and configurable launch files by specifying values that are passed via the command-line, passing in via an <include>, or declared for higher-level files. **Args are not global**. 
+```
+<arg name="init_pose" default="-x 0.0 -y 0.0 -z 0.0"/>
+```
 
 - env  
 machine이나 node를 위해 set되어야하는 environment variables를 정의한다.  
@@ -147,6 +199,121 @@ Launch a test node (see rostest).
 ```
 <test test-name="test_my_node" pkg="my_package" type="test_my_node.py" />
 ```
+
+#### robot_state_publisher package
+[robot_state_publisher docs](https://wiki.ros.org/robot_state_publisher)  
+이 패키지는 joint_states 토픽을 subscribe하여 TF frame정보로 변환하고 tf2_ros package에 전달한다.  
+
+
+#### tf package
+[TF docs](https://wiki.ros.org/tf2)  
+로봇 시스템은 일반적으로 world frame, base frame, gripper frame 등과 같이 시간에 따라 변하는 3D coordinate frame들을 갖는다.  
+tf2는 시간에 따른 이러한 모든 frame을 추적하고 다음과 같은 질문에 답한다.  
+- 5초 전, world frame 기준으로 head frame은 어디에 있었나요?
+- base를 기준으로 그리퍼에 있는 물체의 pose는 어떻습니까?
+- map frame에서 base frame의 현재 pose는 무엇입니까?
+
+크게 다음 두 가지 작업을 수행한다.  
+Broadcasting transforms  
+: 노드가 자신과 관련된 좌표 변환 정보를 다른 노드들에게 전송한다.  
+Listening for transforms  
+: 다른 노드들이 broadcast한 변환 정보를 수신하고 이를 이용하여 좌표 변환을 수행한다.  
+
+ex. 
+```
+# 현재 frame들의 관계를 tree로 구성하여 pdf파일로 저장
+rosrun tf2_tools view_frames.py
+# reference frame에 대한 target frame의 pose를 출력
+rosrun tf tf_echo {ref. frame} {target frame}
+```
+
+#### gazebo_ros package
+[gazebo_ros_pkgs(of gazebo classic) docs](https://wiki.ros.org/simulator_gazebo/Tutorials)  
+[gazebo_ros package source code](https://github.com/ros-simulation/gazebo_ros_pkgs/blob/noetic-devel/gazebo_ros)  
+
+- node: spawn_robot  
+[spawn_model source code](https://github.com/ros-simulation/gazebo_ros_pkgs/blob/noetic-devel/gazebo_ros/scripts/spawn_model)  
+
+Gazebo 시뮬레이션 환경에 로봇 모델을 spawn하는 데 사용되는 노드이다.  
+-unpause: 모델이 스폰된 후 시뮬레이션을 즉시 재개한다.  
+-J: revolute joint의 초기값(radian)을 설정한다.  
+
+```
+<node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
+args="$(arg init_pose) -urdf -model $(arg robot_namespace) -param robot_description
+      -J arm_joint2 -2
+      -J arm_joint3 2
+      -J arm_joint5 0.5
+      -unpause"
+output="screen"/>
+```
+
+#### ros control package 
+[controller_manager docs](https://wiki.ros.org/controller_manager)  
+[ros control docs](https://wiki.ros.org/ros_control)  
+![ros control overview](/assets/img/개념/2024-06-21-gazebo-urdf-xacro/ros%20control%20overview.png){: width="200"}  
+
+1. controller manager  
+1.1. hardware_interface::RobotHW(ex. hardware_interface::EffortJointInterface) instance로 표현되는  
+robot mechanism을 control하기위한 hard-realtime-compatible loop를 제공한다.  
+1.2. controller를 load, unload, start, stop하기위한 infrastructure를 제공한다.  
+
+ex.  
+if you just want to load the controller, but not start it yet:
+```
+ <launch>
+   <node pkg="controller_manager"
+         type="spawner"
+         args="--stopped controller_name1 controller_name2" />
+ </launch>
+```
+rqt 플러그인인 rqt_controller_manager로 컨트롤러를 그래픽으로 load, unload, start, stop할 수 있을 뿐만 아니라, 
+load된 컨트롤러에 대한 정보를 표시할 수 있다.  
+
+2. plugin: JointStateController, JointEffortController  
+controller manager의 관리를 받는 ros_controllers에 포함된  
+controller plugin(gazebo에서 공유라이브러리를 plugin이라고 부름)이다.  
+
+2.1. JointStateController
+hardware_interface::JointStateInterface에 register된 모든 resource들의 state를  
+sensor_msgs/JointState 타입의 topic으로 publish한다.  
+
+2.2. JointEffortController
+desired effort(force/torque)를 Hardware Interface에 Command한다.  
+effort input을 받고 effort output을 보낸다. 단지 forward_command_controller의 input으로 전달한다.  
+
+ex.  
+.launch
+```
+<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+output="screen" ns="/aidin81" args="joint_state_controller
+          joint1_effort_controller
+          joint2_effort_controller
+          joint3_effort_controller
+          joint4_effort_controller
+          joint5_effort_controller
+          joint6_effort_controller"/>
+```
+
+.yaml  
+```
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 1000  # 50
+  
+joint1_effort_controller:
+  type: effort_controllers/JointEffortController
+  joint: arm_joint1
+  pid: {p: 100.0, i: 0.01, d: 10.0}
+```  
+parameter file내에 보이는 joint1_effort_controller 필드는  
+controller_manager에 인자로 전달된 controller name이다.  
+type은 effort_controllers plugin에 미리 정의된, namespace인 effort_controllers과 매크로변수 JointEffortController이다.  
+pid는 매개변수이다. 
+
+
+#### joy package
+[joy docs](https://wiki.ros.org/joy)  
 
 
 
