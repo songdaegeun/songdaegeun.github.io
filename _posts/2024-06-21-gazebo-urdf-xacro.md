@@ -52,7 +52,7 @@ URDF는 XML 기반의 파일 형식으로, 로봇 모델의 물리적 구성 요
 [urdf_XML_](https://wiki.ros.org/urdf/XML)  
 Xacro는 XML을 확장한 매크로 언어로, 복잡한 URDF 파일을 더 효율적으로 작성하고 관리할 수 있게 해준다.  
 매크로와 변수, 조건문을 사용하여 URDF 파일의 재사용성과 가독성을 높인다.  
-ros1에서는 재사용성을 높이기위해 urdf에서 확장된 xacro로 모델을 주로 정의한다.  
+ros1에서는 재사용성을 높이기위해 urdf에서 확장된 xacro로 모델을 주로 정의한다.   
 
 #### sdf(SDFormat)
 [SDFormat extensions to URDF (the \<gazebo\> tag)](http://sdformat.org/tutorials?tut=sdformat_urdf_extensions&cat=specification&)  
